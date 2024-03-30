@@ -1,23 +1,62 @@
-import logo from './logo.svg';
+import {useState} from 'react'
 import './App.css';
 
 function App() {
+  const [issignin,setissignin]=useState(true);
+  const [title,settitle]=useState('Sign in')
+  const [email,setemail]=useState('')
+  const [username,setusername]=useState('')
+  const [password,setpasword]=useState('')
+  const handleswitchtosignin=()=>{
+    if(!issignin) {
+      const input=document.getElementById('email')
+      setemail('')
+      setpasword('')
+      setusername('')
+      input.remove()
+      settitle('Sign in')
+      document.getElementsByClassName('line')[0].style='top: 60px;left: 75px;'
+      setissignin(!issignin)
+    }
+  }
+  const handleswitchtosignup=()=>{
+    if(issignin) {
+      setpasword('')
+      setusername('')
+      const newinput=document.createElement("input")
+      newinput.id='email'
+      
+      newinput.placeholder='Email'
+      newinput.addEventListener('change',(x)=>{
+        setemail(x.target.value)
+      })
+      document.getElementsByClassName('login-form')[0].insertBefore(newinput,document.getElementById('password'))
+      settitle('Sign up') 
+      document.getElementsByClassName('line')[0].style='top: 60px;left: 270px;'
+      setissignin(!issignin)
+    }
+  }
+  const handlebutton=()=>{
+    if(issignin) {
+      alert(username+' '+password)
+    }
+    else {
+      alert(username+' '+email+' '+password)
+    }
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div class='login-form'>
+        <div class='navigator'>
+          <button class='selection' onClick={handleswitchtosignin}>Sign in</button>
+          <button class='selection' onClick={handleswitchtosignup}>Sign up</button>
+        </div>
+        <div class='line'></div>
+        <div class='title'>{title}</div>
+        <input id='username' placeholder="User name" onChange={(x)=>setusername(x.target.value)} value={username}></input>
+        <input id='password' placeholder="Password" onChange={(x)=>setpasword(x.target.value)} value={password}></input>
+        <button class='button' onClick={handlebutton}><span class="text">{title}</span></button>
+      </div>
     </div>
   );
 }
