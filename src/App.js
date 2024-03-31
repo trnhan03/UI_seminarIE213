@@ -1,12 +1,17 @@
 import {useState} from 'react'
 import './App.css';
-
+const testdata={
+  username:'nhóm 12',
+  email:'team12@gmail.com',
+  password:'123456'
+}
 function App() {
   const [issignin,setissignin]=useState(true);
   const [title,settitle]=useState('Sign in')
   const [email,setemail]=useState('')
   const [username,setusername]=useState('')
   const [password,setpasword]=useState('')
+  const [logged,setlogged]=useState(false)
   const handleswitchtosignin=()=>{
     if(!issignin) {
       const input=document.getElementById('email')
@@ -37,14 +42,11 @@ function App() {
     }
   }
   const handlebutton=()=>{
-    if(issignin) {
-      alert(username+' '+password)
-    }
-    else {
-      alert(username+' '+email+' '+password)
-    }
+    setlogged(true)
   }
-  return (
+  //xử lý cho trang home
+  
+  return (!logged?
     <div className="App">
       <div class='login-form'>
         <div class='navigator'>
@@ -57,6 +59,17 @@ function App() {
         <input id='password' placeholder="Password" onChange={(x)=>setpasword(x.target.value)} value={password}></input>
         <button class='button' onClick={handlebutton}><span class="text">{title}</span></button>
       </div>
+    </div>:
+    <div class='home'>
+      <div class="text">
+        <p>WELCOME</p>
+        <div class='in4'>
+          <div>User name: {testdata.username}</div>
+          <div>Email: {testdata.email}</div>
+          <div>Password: {testdata.password}</div>
+        </div>
+      </div>
+        
     </div>
   );
 }
